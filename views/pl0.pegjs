@@ -22,11 +22,11 @@
 
 program = b:block PUNTO {return b;}
 
-block = constantes:(const)? variables:(var)? procedure:(procs)* stat:statement{
+block = constantes:(const)? variables:(var)? procs:(procedure)* stat:st{
 	var bloque = [];
 	if(const) bloque = bloque.concat(const);
 	if(var) bloque = bloque.concat(var);
-	if(procedure) bloque = bloque.concat(procedure);
+	if(procs) bloque = bloque.concat(procs);
 	bloque = bloque.concat([s]);
 	return bloque;
 }
@@ -79,7 +79,7 @@ st     = i:ID ASSIGN e:exp{
              };
          }
 
-       / WHILE c: condicion DO s:statement {
+       / WHILE c: condicion DO s:st {
              return {
                type:"WHILE", 
                condition: c, 
@@ -114,9 +114,9 @@ exp    = t:(symbol:ADD? t1: term {
                 value: t1
               };
             }
-        } 
-       /r:(ADD term)* { 
-              return {tree(t,r)}; 
+        }) 
+        r:(ADD term)* { 
+	    { return tree(t,r) }; 
         }
 
 exp    = t:(term)   
@@ -134,8 +134,8 @@ _ = $[ \t\n\r]*
 const = fijo: constFijo opcional: (constOpcional)* PUNTOCOMA {
 	return [fijo].concat(opcional);
 }
-constFijo = CONST i:ID ASSIGN n:NUM {return {type: '=', left: i, right: n};}  
-constOpcional = _ ',' _ CONST i:ID ASSIGN n:NUM {return {type: '=', left: i, right: n};}
+constFijo = CONST i:ID ASSIGN n:NUMBER {return {type: '=', left: i, right: n};}  
+constOpcional = _ ',' _ CONST i:ID ASSIGN n:NUMBER {return {type: '=', left: i, right: n};}
 
 
 //Variables
@@ -149,6 +149,7 @@ procedure = PROCEDURE i:ID LEFTPAR arg:argumentos? RIGHTPAR PUNTOCOMA b:block PU
 	if(arg) {return type: "PROCEDURE", value: i, parameters: arg, block: b}
 	else {return type: "PROCEDURE", value: i, block: b}
 }
+
 argumentos = arg1:ID arg2:(COMA i:ID {return i;})* {return [arg1].concat(arg2);}
 
 //------------------------------------------------------------
@@ -173,10 +174,10 @@ ODD      = _ "odd" _
 ID       = _ id:$([a-zA-Z_][a-zA-Z_0-9]*) _ { 
               return { type: 'ID', value: id }; 
             }
-OP       = _ o:$([<>!=]'=' | [<>#]) _ {return o;}
+OP       = _ op:$([<>!=]'='/[<>#]) _ {return o;}
 ASSIGN   = _ op:'=' _  { return op; }
 ADD      = _ op:[+-] _ { return op; }
 MUL      = _ op:[*/] _ { return op; }
 NUMBER   = _ digits:$[0-9]+ _ { 
-              return { type: 'NUM', value: parseInt(digits, 10) }; 
+              return { type: 'NUMBER', value: parseInt(digits, 10) }; 
             }
