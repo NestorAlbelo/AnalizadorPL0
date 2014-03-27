@@ -139,8 +139,8 @@ pl0 = (function() {
         peg$c26 = function(i) {return i;},
         peg$c27 = function(v1, v2) {return [v1].concat(v2);},
         peg$c28 = function(i, arg, b) {
-        	if(arg) {return type: "PROCEDURE", value: i, parameters: arg, block: b}
-        	else {return type: "PROCEDURE", value: i, block: b}
+        	if(arg) {return {type: "PROCEDURE", value: i, parameters: arg, block: b};}
+        	else {return {type: "PROCEDURE", value: i, block: b};}
         },
         peg$c29 = function(arg1, arg2) {return [arg1].concat(arg2);},
         peg$c30 = ";",
