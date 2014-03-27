@@ -146,8 +146,8 @@ variables = VAR v1:ID v2:(COMA i:ID {return i;})* PUNTOCOMA {return [v1].concat(
 //Procedure
 //---------------------------------------------------------
 procedure = PROCEDURE i:ID LEFTPAR arg:argumentos? RIGHTPAR PUNTOCOMA b:block PUNTOCOMA{
-	if(arg) {return type: "PROCEDURE", value: i, parameters: arg, block: b}
-	else {return type: "PROCEDURE", value: i, block: b}
+	if(arg) {return {type: "PROCEDURE", value: i, parameters: arg, block: b};}
+	else {return {type: "PROCEDURE", value: i, block: b};}
 }
 
 argumentos = arg1:ID arg2:(COMA i:ID {return i;})* {return [arg1].concat(arg2);}
