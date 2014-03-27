@@ -12,13 +12,6 @@ h1 {
   background-size: 5% 70%;
   padding-left: 84px; }
 
-header h1 {
-  font-size: 40px;
-  line-height: 80px;
-  background: transparent url(/images/tardis.png) 0 0 no-repeat;
-  background-size: 5% 70%;
-  padding-left: 84px; }
-
 nav {
   font-weight: bold; }
   nav ul {

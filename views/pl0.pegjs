@@ -40,13 +40,14 @@ st     = i:ID ASSIGN e:exp{
           }
 
        / CALL i:ID arg: (LEFTPAR a:argumentos RIGHTPAR)?{
-       		   if(argumentos){
+       	  if(argumentos){
                return {
                  type: "CALL", 
                  arguments: arg, 
                  value: i
                };
-       		   else {
+	  }
+          else {
                return {
                  type: "CALL", 
                  value: i
@@ -113,11 +114,12 @@ exp    = t:(symbol:ADD? t1: term {
                 value: t1
               };
             }
-          } r:(ADD term)* { 
-              return tree(t,r); 
-            }
+        } 
+       /r:(ADD term)* { 
+              return {tree(t,r)}; 
+        }
 
-exp    = t:term   
+exp    = t:(term)   
 term   = f:factor r:(MUL factor)* { return tree(f,r); }
 
 factor = NUMBER
