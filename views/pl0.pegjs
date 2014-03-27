@@ -22,10 +22,10 @@
 
 program = b:block PUNTO {return b;}
 
-block = constantes:(const)? variables:(var)? procs:(procedure)* stat:st{
+block = constante:(constantes)? variable:(variables)? procs:(procedure)* stat:st{
 	var bloque = [];
-	if(const) bloque = bloque.concat(const);
-	if(var) bloque = bloque.concat(var);
+	if(constante) bloque = bloque.concat(constante);
+	if(variable) bloque = bloque.concat(variable);
 	if(procs) bloque = bloque.concat(procs);
 	bloque = bloque.concat([s]);
 	return bloque;
@@ -131,7 +131,7 @@ _ = $[ \t\n\r]*
 
 //Constantes
 //---------------------------------------------------------
-const = fijo: constFijo opcional: (constOpcional)* PUNTOCOMA {
+constantes = fijo: constFijo opcional: (constOpcional)* PUNTOCOMA {
 	return [fijo].concat(opcional);
 }
 constFijo = CONST i:ID ASSIGN n:NUMBER {return {type: '=', left: i, right: n};}  
@@ -140,7 +140,7 @@ constOpcional = _ ',' _ CONST i:ID ASSIGN n:NUMBER {return {type: '=', left: i, 
 
 //Variables
 //---------------------------------------------------------
-var = VAR v1:ID v2:(COMA i:ID {return i;})* PUNTOCOMA {return [v1].concat(v2);}
+variables = VAR v1:ID v2:(COMA i:ID {return i;})* PUNTOCOMA {return [v1].concat(v2);}
 
 
 //Procedure
