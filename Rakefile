@@ -10,6 +10,11 @@ task :clean do
   sh "rm -f public/pl0.js"
 end
 
+desc "Borrar base de datos"
+task :rmdb do
+  sh "rm -f database.db"
+end
+
 desc "Compile public/styles.scss into public/styles.css using sass"
 task :sass do
   sh "sass  public/styles.scss public/styles.css"
