@@ -36,10 +36,10 @@ pl0 = (function() {
         peg$c1 = function(b) {return b;},
         peg$c2 = null,
         peg$c3 = [],
-        peg$c4 = function(constantes, variables, procs, stat) {
+        peg$c4 = function(constante, variable, procs, stat) {
         	var bloque = [];
-        	if(const) bloque = bloque.concat(const);
-        	if(var) bloque = bloque.concat(var);
+        	if(constante) bloque = bloque.concat(constante);
+        	if(variable) bloque = bloque.concat(variable);
         	if(procs) bloque = bloque.concat(procs);
         	bloque = bloque.concat([s]);
         	return bloque;
@@ -393,12 +393,12 @@ pl0 = (function() {
       var s0, s1, s2, s3, s4;
 
       s0 = peg$currPos;
-      s1 = peg$parseconst();
+      s1 = peg$parseconstantes();
       if (s1 === peg$FAILED) {
         s1 = peg$c2;
       }
       if (s1 !== peg$FAILED) {
-        s2 = peg$parsevar();
+        s2 = peg$parsevariables();
         if (s2 === peg$FAILED) {
           s2 = peg$c2;
         }
@@ -934,7 +934,7 @@ pl0 = (function() {
       return s0;
     }
 
-    function peg$parseconst() {
+    function peg$parseconstantes() {
       var s0, s1, s2, s3;
 
       s0 = peg$currPos;
@@ -1062,7 +1062,7 @@ pl0 = (function() {
       return s0;
     }
 
-    function peg$parsevar() {
+    function peg$parsevariables() {
       var s0, s1, s2, s3, s4, s5, s6;
 
       s0 = peg$currPos;
