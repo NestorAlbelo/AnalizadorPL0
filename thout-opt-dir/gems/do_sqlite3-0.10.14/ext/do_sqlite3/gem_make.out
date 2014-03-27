@@ -1,0 +1,2 @@
+C:/Ruby200-x64/bin/ruby.exe extconf.rb
+C:/Ruby200-x64/bin/ruby.exe: invalid option -A  (-h will show valid options) (RuntimeError)
