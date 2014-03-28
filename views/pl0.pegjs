@@ -39,8 +39,8 @@ st     = i:ID ASSIGN e:exp{
              }; 
           }
 
-       / CALL i:ID arg: (LEFTPAR a:argumentos RIGHTPAR)?{
-       	  if(argumentos){
+       / CALL i:ID arg: (LEFTPAR a:argumentos RIGHTPAR {return a;})?{
+       	  if(arg){ 
                return {
                  type: "CALL", 
                  arguments: arg, 
@@ -55,14 +55,14 @@ st     = i:ID ASSIGN e:exp{
              }
          }
 
-       / BEGIN stat1: st stat2:(PUNTOCOMA s:st {return s;})* 'END' {
+       / BEGIN stat1: st stat2:(PUNTOCOMA s:st {return s;})* END {
              return { 
                type: "BEGIN",
                value: [stat1].concat(stat2)
              };
          }
 
-       / IF e:exp THEN st:st ELSE sf:st{
+       / IF e:condicion THEN st:st ELSE sf:st{
              return {
                type: 'IFELSE',
                c:  e,
@@ -71,7 +71,7 @@ st     = i:ID ASSIGN e:exp{
              };
          }
 
-       / IF e:exp THEN st:st {
+       / IF e:condicion THEN st:st {
              return {
                type: 'IF',
                c:  e,
@@ -95,7 +95,7 @@ condicion = ODD e: exp {
             }
             /exp1: exp o:OP exp2: exp {
               return {
-                  type:op,
+                  type: o,
                   left: exp1,
                   right: exp2 
               };
@@ -173,7 +173,7 @@ ODD      = _ "odd" _
 ID       = _ id:$([a-zA-Z_][a-zA-Z_0-9]*) _ { 
               return { type: 'ID', value: id }; 
             }
-OP       = _ op:$([<>!=]'='/[<>#]) _ {return o;}
+OP       = _ op:$([<>!=]'='/[<>#]) _ {return op;}
 ASSIGN   = _ op:'=' _  { return op; }
 ADD      = _ op:[+-] _ { return op; }
 MUL      = _ op:[*/] _ { return op; }
