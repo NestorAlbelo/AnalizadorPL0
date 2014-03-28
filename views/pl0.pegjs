@@ -27,7 +27,7 @@ block = constante:(constantes)? variable:(variables)? procs:(procedure)* stat:st
 	if(constante) bloque = bloque.concat(constante);
 	if(variable) bloque = bloque.concat(variable);
 	if(procs) bloque = bloque.concat(procs);
-	bloque = bloque.concat([s]);
+	bloque = bloque.concat([stat]);
 	return bloque;
 }
 
@@ -118,8 +118,7 @@ exp    = t:(symbol:ADD? t1: term {
         r:(ADD term)* { 
 	    { return tree(t,r) }; 
         }
-
-exp    = t:(term)   
+ 
 term   = f:factor r:(MUL factor)* { return tree(f,r); }
 
 factor = NUMBER

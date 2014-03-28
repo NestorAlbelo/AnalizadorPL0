@@ -41,7 +41,7 @@ pl0 = (function() {
         	if(constante) bloque = bloque.concat(constante);
         	if(variable) bloque = bloque.concat(variable);
         	if(procs) bloque = bloque.concat(procs);
-        	bloque = bloque.concat([s]);
+        	bloque = bloque.concat([stat]);
         	return bloque;
         },
         peg$c5 = function(i, e) { 
@@ -801,14 +801,6 @@ pl0 = (function() {
         peg$currPos = s0;
         s0 = peg$c0;
       }
-
-      return s0;
-    }
-
-    function peg$parseexp() {
-      var s0;
-
-      s0 = peg$parseterm();
 
       return s0;
     }
